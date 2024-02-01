@@ -44,21 +44,32 @@ const data = {
 }
 
 router.use("/blogs/:blogid", function (req, res) {
-
     res.render("users/blog-details")
 });
 
-router.use("/blogs", function (req, res) {
-    db.query()
-    res.render("users/blogs", data)
+router.use("/blogs", function(req, res) {
+    db.execute("select*from blog")
+        .then(result => {
+            res.render("users/blogs", {
+                title: "Tüm Kurslar", 
+                blogs: result[0],
+                categories: data.categories
+            });
+
+        })
+        .catch(err => console.log(err));
+
 });
 
-router.use("/", function async(req, res) {
+
+router.use("/", function(req, res) {
     db.query("select*from blog")
         .then(result => {
-            
-            console.log(result[0]);
-            res.render("users/index", data);
+            res.render("users/index", {
+                title: "Popüler Kurslar", 
+                blogs: result[0],
+                categories: data.categories
+            });
 
         })
         .catch(err => console.log(err));
