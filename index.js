@@ -1,6 +1,7 @@
 const express = require("express");
 
 const app = express();
+app.use(express.urlencoded({ extended: false})); // formdan gelen verinin hangi formda geleceğini belirliyoruz.
 
 app.set("view engine", "ejs");
 

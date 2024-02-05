@@ -14,7 +14,7 @@
                 <div class="col-md-3">
                     <div class="list-group">
 
-                        <%- include('../partials/category-menu', categories) %>
+                        <%- include('../partials/category-menu', { categories, selectedCategory }) %>
 
                     </div>
                 </div>
@@ -22,6 +22,10 @@
                     <h1 class="h3 mb-3">
                         <%= title %>
                     </h1>
+
+                    <% if (blogs.length == 0) { %>
+                        <%- include('../partials/no-products') %>
+                    <% } %>
 
                     <% blogs.forEach(blog => { %>
                         <%- include('../partials/blog-card', blog) %>
