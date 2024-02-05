@@ -3,77 +3,61 @@ const router = express.Router();
 
 const db = require("../data/db");
 
+router.use("/blogs/:blogid", async function (req, res) {
+    const id = parseInt(req.params.blogid); // blog-card da link oluşturduk.
 
-const data = {
-    title: "Popüler Kurslar",
-    categories: ["Web Geliştirme", "Programlama", "Mobil Uygulamalar", "Veri Analizi", "Ofis Uygulamaları"],
-    blogs: [
-        {
-            blogid: 1,
-            title: "Komple Uygulamalı Web Geliştirme",
-            desc: "Sıfırdan ileri seviye web geliştirme",
-            image: "web.jpg",
-            homepage: true,
-            confirmation: true
-        },
-        {
-            blogid: 2,
-            title: "Python İle Sıfırdan İleriye Programlama",
-            desc: "Sıfırdan ileri seviye python programlama",
-            image: "python.jpg",
-            homepage: true,
-            confirmation: true
-        },
-        {
-            blogid: 3,
-            title: "Node.js İle Sıfırdan İleriye Programlama",
-            desc: "Sıfırdan ileri seviye Node.js",
-            image: "images.jpg",
-            homepage: false,
-            confirmation: true
-        },
-        {
-            blogid: 4,
-            title: "Ofis Uygulamaları",
-            desc: "Ofis Uygulamaları Geliştirme",
-            image: "web.jpg",
-            homepage: true,
-            confirmation: true
-        },
-    ]
-}
+    try {
+        const result = await db.query("select * from blog where blogid=" + id);
 
-router.use("/blogs/:blogid", function (req, res) {
-    res.render("users/blog-details")
+        const arr = result[0];
+
+        if(result != 0)
+        {
+            res.render("users/blog-details", {
+                title: result[0].title,
+                result: result[0],
+            });
+        }
+        else{
+            res.redirect("/");
+        }
+       
+    }
+    catch(err){
+        console.log(err);
+    }
 });
 
-router.use("/blogs", function(req, res) {
-    db.execute("select*from blog")
-        .then(result => {
-            res.render("users/blogs", {
-                title: "Tüm Kurslar", 
-                blogs: result[0],
-                categories: data.categories
-            });
+router.use("/blogs", async function (req, res) {
+    try {
+        const result = await db.query("SELECT * FROM blog WHERE homepage=true");
+        const sonuc = await db.query("SELECT * FROM category");
 
-        })
-        .catch(err => console.log(err));
-
+        res.render("users/blogs", {
+            title: "Tüm Kurslar",
+            blogs: result,
+            categories: sonuc,
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
+router.use("/", async function (req, res) {
 
-router.use("/", function(req, res) {
-    db.query("select*from blog")
-        .then(result => {
-            res.render("users/index", {
-                title: "Popüler Kurslar", 
-                blogs: result[0],
-                categories: data.categories
-            });
+    try {
+        const result = await db.query("select*from blog where homepage=true");
+        const sonuc = await db.query("SELECT * FROM category");
 
-        })
-        .catch(err => console.log(err));
-
+        res.render("users/index", {
+            title: "Popüler Kurslar",
+            blogs: result,
+            categories: sonuc,
+        });
+    } catch(err) {
+        console.log(err);
+    }
 });
 
 module.exports = router;

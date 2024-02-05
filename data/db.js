@@ -16,8 +16,9 @@ const query = async (sql, values) => {
         const result = await client.query(sql, values);
         return result.rows;
     } catch (err) {
-        console.error('Sorgu hatası', err);
-        throw err;
+        console.error('Sorgu hatası:', err.message); // PostgreSQL hata mesajını log'la
+        console.error('Sorgu:', sql); // Hata oluşan sorguyu log'la
+        console.error('Parametreler:', values); // Hata ol
     }
 };
 
