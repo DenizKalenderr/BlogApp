@@ -26,7 +26,7 @@
                     <% } %>
                     <% if (action != "undefined" && action =="delete") { %>
                         <div class="alert alert-success">
-                            Blog Siindi.
+                            Blog Başarıyla Silindi.
                         </div>
                      
                     <% } %>
@@ -36,6 +36,7 @@
                                 <th style="width:50px;">id</th>
                                 <th style="width: 250px;">image</th>
                                 <th>title</th>
+                                <th>category</th>
                                 <th style="width:130px;"></th>
                             </tr>
                         </thead>
@@ -43,17 +44,24 @@
                             <% blogs.forEach(blog=> { %>
                                 <tr>
                                     <td>
-                                        <%= blog.blogid %>
+                                        <%= blog.dataValues.id %>
                                     </td>
                                     <td>
                                         <img src="/static/images/img/<%= blog.image %>" class="img-fluid"  alt="">
                                     </td>
                                     <td>
-                                        <%= blog.title %>
+                                        <%= blog.dataValues.title %>
                                     </td>
+
                                     <td>
-                                        <a class="btn btn-sm btn-primary" href="/admin/blogs/<%= blog.blogid %>">edit</a>
-                                        <a class="btn btn-sm btn-danger" href="/admin/blog/delete/<%= blog.blogid %>">delete</a>
+                                        <% blog.categories.forEach(category => { %>
+                                            <%=category.name %>
+                                        <% }) %>
+                                    </td>
+     
+                                    <td>
+                                        <a class="btn btn-sm btn-primary" href="/admin/blogs/<%= blog.id %>">edit</a>
+                                        <a class="btn btn-sm btn-danger" href="/admin/blog/delete/<%= blog.id %>">delete</a>
                                     </td>
                                 </tr>
                                 <% }) %>

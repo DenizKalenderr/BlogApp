@@ -26,7 +26,7 @@
                     <% } %>
                     <% if (action != "undefined" && action =="delete") { %>
                         <div class="alert alert-success">
-                            Kategori Siindi.
+                            Kategori Silindi.
                         </div>
                      
                     <% } %>
@@ -43,14 +43,14 @@
                             <% categories.forEach(category=> { %>
                                 <tr>
                                     <td>
-                                        <%= category.categoryid %>
+                                        <%= category.dataValues.categoryid %>
                                     </td>
                                     <td>
-                                        <%= category.name %>
+                                        <%= category.dataValues.name %>
                                     </td>
                                     <td>
-                                        <a class="btn btn-sm btn-primary" href="/admin/categories/<%= category.categoryid %>">edit</a>
-                                        <a class="btn btn-sm btn-danger" href="/admin/category/delete/<%= category.categoryid %>">delete</a>
+                                        <a class="btn btn-sm btn-primary" href="/admin/categories/<%= category.dataValues.id %>">edit</a>
+                                        <a class="btn btn-sm btn-danger" href="/admin/category/delete/<%= category.dataValues.id %>">delete</a>
                                     </td>
                                 </tr>
                                 <% }) %>
