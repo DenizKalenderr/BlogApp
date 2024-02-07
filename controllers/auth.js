@@ -47,7 +47,7 @@ exports.get_login = async function(req, res) {
 
 exports.get_logout = async function(req, res) {
     try {
-        res.clearCookie("isAuth");
+        await req.session.destroy();
         return res.render("auth/login", {
             title: "login"
         });

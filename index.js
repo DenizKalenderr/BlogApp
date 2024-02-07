@@ -10,7 +10,10 @@ app.use(cookieParser());
 app.use(session({
     secret: "hello",
     resave: false, // bir değişiklik yaptığımızda güncelleme olur
-    saveUninitialized: false //siteyi ziyaret eden her kullanıcı için session oluşturulacağı garantisi
+    saveUninitialized: false, //siteyi ziyaret eden her kullanıcı için session oluşturulacağı garantisi
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24
+    }
 
 }));
 
