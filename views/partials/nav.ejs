@@ -2,9 +2,13 @@
     <div class="container">
         <a href="/" class="navbar-brand">BlogApp</a>
         <ul class="navbar-nav me-auto">
+
             <li class="nav-item">
                 <a href="/blogs" class="nav-link">Blog Listesi</a>
             </li>
+
+            <% if (typeof isAuth != "undefined" && isAuth == "1") { %>
+             
             <li class="nav-item">
                 <a href="/admin/blogs" class="nav-link">Admin Blogs</a>
             </li>
@@ -17,6 +21,28 @@
             <li class="nav-item">
                 <a href="/admin/category/create" class="nav-link">Add Category</a>
             </li>
+
+            <% } %>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+
+            <% if (typeof isAuth != "undefined" && isAuth == "1") { %>
+
+                <li class="nav-item">
+                    <a href="/account/logout" class="nav-link">Logout</a>
+                </li>
+
+            <% } else { %>
+
+                <li class="nav-item">
+                    <a href="/account/login" class="nav-link">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/account/register" class="nav-link">Register</a>
+                </li>
+                 
+            <% } %>
         </ul>
     </div>
 </nav>

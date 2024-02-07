@@ -4,6 +4,7 @@ const Category = require("../models/category");
 const { Op } = require("sequelize");
 
 exports.blogs_by_category = async function (req, res) {
+    
     const id = parseInt(req.params.categoryid);
     try {
         const blogs = await Blog.findAll({
@@ -23,7 +24,8 @@ exports.blogs_by_category = async function (req, res) {
             title: "Tüm Kurslar",
             blogs: blogs,
             categories: categories,
-            selectedCategory: id
+            selectedCategory: id,
+            
         })
     }
     catch (err) {
@@ -84,7 +86,7 @@ exports.blog_list = async function (req, res) {
 }
 
 exports.index = async function (req, res) {
-
+    console.log(req.cookies);
     try {
         const result = await Blog.findAll({
             where: {
@@ -102,7 +104,8 @@ exports.index = async function (req, res) {
             title: "Popüler Kurslar",
             blogs: result,
             categories: sonuc,
-            selectedCategory: null
+            selectedCategory: null,
+            isAuth: req.session.isAuth
         });
     } catch (err) {
         console.log(err);

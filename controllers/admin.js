@@ -43,6 +43,7 @@ exports.post_blog_delete = async function(req, res) {
 }
 
 exports.get_category_delete = async function(req, res) {
+    
     const categoryid = req.params.categoryid;
 
     try {
@@ -230,8 +231,8 @@ exports.get_category_remove = async function(req, res) {
     const blogid = req.body.blogid;
     const categoryid = req.body.categoryid;
 
-    await sequelize.query(`delete from blogcategories where blogId=${blogid} and categoryId=${categoryid}`);
-    res.redirect("/admin/categories" + categoryid);
+    await sequelize.query(`delete from blogCategories where blogId=${blogid} and categoryId=${categoryid}`);
+    res.redirect("/admin/categories/romeve" + categoryid);
 }
 
 //lazy loading uygulandı
@@ -309,7 +310,7 @@ exports.get_blogs = async function (req, res) {
 exports.get_categories = async function (req, res) {
     try{
         const categories = await Category.findAll();
-        console.log(categories);
+
         res.render("admin/category-list", {
             title: "blog list",
             categories: categories,

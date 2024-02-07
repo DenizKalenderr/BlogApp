@@ -34,6 +34,7 @@ router.get("/blogs/:blogid", adminController.get_blog_edit);
 
 router.post("/blogs/:blogid", imageUpload.upload.single("image"), adminController.post_blog_edit);
 
+
 // categories edit
 router.get("/categories/:categoryid", adminController.get_category_edit);
 
