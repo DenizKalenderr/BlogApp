@@ -1,10 +1,24 @@
+// express modülleri
 const express = require("express");
-
 const app = express();
+
+
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
+// node modules
+const path = require("path");
+
+// custom modules
+const sequelize = require("./data/db");
+const dummyData = require("./data/dummy-data");
+const locals = require("./middlewares/locals");
+
+// template engine
 app.set("view engine", "ejs");
+
+// middleware
 app.use(express.urlencoded({ extended: false})); // formdan gelen verinin hangi formda geleceğini belirliyoruz.
 app.use(cookieParser());
 app.use(session({
@@ -13,16 +27,29 @@ app.use(session({
     saveUninitialized: false, //siteyi ziyaret eden her kullanıcı için session oluşturulacağı garantisi
     cookie: {
         maxAge: 1000 * 60 * 60 * 24
-    }
+    },
+    store: new SequelizeStore({
+        db: sequelize
+    })
 
 }));
 
+app.use(locals);
 
 
-const path = require("path");
+// models
+const Category = require("./models/category");
+const Blog = require("./models/blog");
+const User = require("./models/user");
+
+
+
+// routes
 const userRoute = require("./routes/user");
 const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
+
+
 
 app.use("/libs", express.static(path.join(__dirname, "node_modules")));
 app.use("/static", express.static(path.join(__dirname, "public")));
@@ -31,12 +58,6 @@ app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/admin", adminRoutes);
 app.use("/account", authRoutes);
 app.use(userRoute);
-
-const sequelize = require("./data/db");
-const dummyData = require("./data/dummy-data");
-const Category = require("./models/category");
-const Blog = require("./models/blog");
-const User = require("./models/user");
 
 // her user için bir blog, blog table da userid kolonu olacak.
 //Bire çok ilişki.
@@ -52,8 +73,8 @@ Blog.belongsToMany(Category, { through: "blogCategories"});
 Category.belongsToMany(Blog, { through: "blogCategories"});
 
 (async () => {
-    await sequelize.sync({ force: true });
-    await dummyData();
+    //  await sequelize.sync({ force: true });
+    //  await dummyData();
 })();
 
 

@@ -283,6 +283,7 @@ exports.post_category_edit = async function(req, res) {
 }
 
 exports.get_blogs = async function (req, res) {
+   
     try{
         // const blogs = await db.query("select blogid, title, image from blog");
         const blogs = await Blog.findAll(

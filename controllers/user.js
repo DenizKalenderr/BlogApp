@@ -48,7 +48,8 @@ exports.blogs_details = async function (req, res) {
         if(result){
             return res.render("users/blog-details", {
                 title: result.title,
-                result: result
+                result: result,
+               
             });
         }
         res.redirect("/");
@@ -77,7 +78,8 @@ exports.blog_list = async function (req, res) {
             title: "Tüm Kurslar",
             blogs: result,
             categories: sonuc,
-            selectedCategory: null
+            selectedCategory: null,
+          
         });
     } catch (err) {
         console.log(err);
@@ -105,7 +107,7 @@ exports.index = async function (req, res) {
             blogs: result,
             categories: sonuc,
             selectedCategory: null,
-            isAuth: req.session.isAuth
+            
         });
     } catch (err) {
         console.log(err);

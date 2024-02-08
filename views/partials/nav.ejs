@@ -7,7 +7,7 @@
                 <a href="/blogs" class="nav-link">Blog Listesi</a>
             </li>
 
-            <% if (typeof isAuth != "undefined" && isAuth == "1") { %>
+            <% if (isAuth) { %>
              
             <li class="nav-item">
                 <a href="/admin/blogs" class="nav-link">Admin Blogs</a>
@@ -27,7 +27,11 @@
 
         <ul class="navbar-nav ms-auto">
 
-            <% if (typeof isAuth != "undefined" && isAuth == "1") { %>
+            <% if (isAuth) { %>
+
+                <li class="nav-item">
+                    <a href="/account/index" class="nav-link"><%= name %></a>
+                </li>
 
                 <li class="nav-item">
                     <a href="/account/logout" class="nav-link">Logout</a>
