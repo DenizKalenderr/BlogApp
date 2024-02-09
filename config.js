@@ -5,6 +5,11 @@ const config = {
     password: '201874',
     database: 'blogdb',
     port: '5432'
+  },
+  email: {
+    username: "",
+    password: "",
+    from: ""
   }
 }
 

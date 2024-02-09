@@ -41,6 +41,7 @@ app.use(locals);
 const Category = require("./models/category");
 const Blog = require("./models/blog");
 const User = require("./models/user");
+const Role = require("./models/role");
 
 
 
@@ -71,6 +72,9 @@ User.hasMany(Blog); // Bir user birden fazla bloga sahip olabilir.
 
 Blog.belongsToMany(Category, { through: "blogCategories"});
 Category.belongsToMany(Blog, { through: "blogCategories"});
+
+Role.belongsToMany(User, { through: "userRoles"});
+User.belongsToMany(Role, { through: "userRoles"});
 
 (async () => {
     //  await sequelize.sync({ force: true });
